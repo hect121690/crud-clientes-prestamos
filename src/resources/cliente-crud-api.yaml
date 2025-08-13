@@ -1,0 +1,76 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "CRUD de Clientes"
+  description: "API para gestionar clientes usando Record y Pattern Matching en Java 17"
+host: "localhost:8080"
+basePath: "/api"
+schemes:
+  - http
+paths:
+  /clientes:
+    get:
+      summary: "Obtener todos los clientes"
+      responses:
+        200:
+          description: "Lista de clientes"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Cliente"
+    post:
+      summary: "Crear un nuevo cliente"
+      parameters:
+        - in: "body"
+          name: "cliente"
+          description: "Cliente a crear"
+          required: true
+          schema:
+            $ref: "#/definitions/Cliente"
+      responses:
+        201:
+          description: "Cliente creado"
+  /clientes/{id}:
+    put:
+      summary: "Actualizar un cliente por ID"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "cliente"
+          required: true
+          schema:
+            $ref: "#/definitions/Cliente"
+      responses:
+        200:
+          description: "Cliente actualizado"
+    delete:
+      summary: "Eliminar un cliente por ID"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Cliente eliminado"
+
+definitions:
+  Cliente:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      nombre:
+        type: "string"
+      email:
+        type: "string"
+      edad:
+        type: "integer"
+      tipoCliente:
+        type: "string"
+        enum:
+          - REGULAR
+          - VIP
